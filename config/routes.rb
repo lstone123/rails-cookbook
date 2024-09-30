@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   # post 'categories', to: 'categories#create'
   # delete 'categories/:id', to: 'categories#destroy'
 
-  resources :categories, except: %i[edit update]
+  # get 'categories/:category_id/bookmarks/new', to: 'bookmarks#new'
 
+  resources :categories, except: %i[edit update] do
+    resources :bookmarks, only: %i[new create show]
+  end
+  resources :bookmarks, only: [:destroy]
 end
