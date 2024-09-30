@@ -1,0 +1,6 @@
+<h1>View your cookbook categories here</h1>
+<ul>
+  <% @categories.each do |category| %>
+  <li><%= category.name %> <%= link_to "delete", category_path(category), data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %></li>
+  <% end %>
+</ul>
