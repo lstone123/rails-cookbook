@@ -1,21 +1,30 @@
-<h1><%= @category.name %></h1>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_path "banner.jpg" %>);">
+  <div class="container">
+    <h1><%= @category.name %></h1>
+  </div>
+</div>
 
-<ul>
-  <% @category.bookmarks.each do |bookmark| %>
-  <li>
-    <h2><%= bookmark.recipe.name %> | </h2> <%= link_to "delete", bookmark_path(bookmark), data:
-    { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-    <p><%= bookmark.recipe.description %></p>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center py-3">
+    <h2>Recipes</h2>
+    <%= link_to "Add a recipe", new_category_bookmark_path(@category), class: "btn btn-primary btn-font-white" %>
+  </div>
+  <div class="card-container">
 
-    <p>rating: <%= bookmark.recipe.rating %></p><%= bookmark.recipe.rating %>
-    <p><%= bookmark.comment %></p>
-  </li>
-  <% end %>
-
-  <%= link_to "back to all categories", categories_path %>
-  <%= link_to "add a new recipe to your list", new_category_bookmark_path(@category) %>
-</ul>
-
-<%# back to the index page %>
-<%# link to add a new recipe (bookmark!) %>
-<%# add a new category %>
+    <% @category.bookmarks.each do |bookmark| %>
+    <div class="card-recipe">
+      <%= image_tag bookmark.recipe.image_url %>
+        <div class="p-3">
+          <h3><%= bookmark.recipe.name.capitalize %></h3>
+          <p><%= bookmark.recipe.description %></p>
+        </div>
+        <div class="card-recipe-infos">
+          <h3>"<%= bookmark.comment %></h3>
+          <h3><%= bookmark.recipe.rating %></h3>
+          <%= link_to "🗑", bookmark_path(bookmark), data:
+          { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "card-icon" %>
+        </div>
+    </div>
+    <% end %>
+  </div>
+</div>
